@@ -1,0 +1,183 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display error', 1);
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    $data = file_get_contents('php://input');
+    $dataArray = json_decode($data, true);
+    
+
+    $hostname = 'localhost';
+    $username = 'root';
+    $password = '';
+    $database = 'user';
+    $conn = mysqli_connect($hostname, $username, $password, $database);
+    
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $usertable1 = "usertable";
+    $stmt = $conn->prepare("INSERT INTO $usertable1 (`Name`) VALUES (?)");
+
+    if (!$stmt) {
+        die("Error preparing the statement: " . $conn->error);
+    }
+    
+
+    foreach ($dataArray as $data) {
+
+        $value = $data['value'];
+
+        $stmt->bind_param('s',  $value);
+
+        if (!$stmt->execute()) {
+            die("Error executing the query: " . $stmt->error);
+        }
+    // print_r($stmt);exit;
+
+    }
+    $stmt->close();
+    $conn->close();
+    $response = array('message' => 'Data received successfully');
+    echo json_encode($response);
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_error', 1);
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    $data = file_get_contents('php://input');
+    $dataArray = json_decode($data, true);
+    // print_r($dataArray);
+    
+
+    $hostname = 'localhost';
+    $username = 'root';
+    $password = '';
+    $database = 'myDB';
+    $conn = mysqli_connect($hostname, $username, $password, $database);
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+      }
+      $stmt = $conn->prepare("INSERT INTO MyGuests (firstname) VALUES (?)");
+      if (!$stmt) {
+        die("Error preparing the statement: " . $conn->error);
+    }
+    foreach ($dataArray as $data) {
+
+        $value = $data['value'];
+
+        $stmt->bind_param('s',  $value);
+        print_r($stmt);
+        if (!$stmt->execute()) {
+            echo "New records created successfully";
+        }
+        // echo "New records created successfully";
+
+    }
+    $stmt->close();
+    $conn->close();
+    $response = array('message' => 'Data received successfully');
+    echo json_encode($response);
+
+
+    }
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+error_reporting(E_ALL);
+ini_set('display error', 1);
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+    $data = file_get_contents('php://input');
+    $dataArray = json_decode($data, true);
+    
+
+    $hostname = 'localhost';
+    $username = 'root';
+    $password = '';
+    $database = 'student';
+    $conn = mysqli_connect($hostname, $username, $password, $database);
+    
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $usertable1 = "stutable";
+    $stmt = $conn->prepare("INSERT INTO $usertable1 (`Sr No`,`Name`) VALUES (?,?)");
+
+    if (!$stmt) {
+        die("Error preparing the statement: " . $conn->error);
+    }
+    
+
+    foreach ($dataArray as $data) {
+        $id  = $data['id'];
+        $value = $data['value'];
+
+        $stmt->bind_param('ss', $id,  $value);
+
+        if (!$stmt->execute()) {
+            die("Error executing the query: " . $stmt->error);
+        }
+    // print_r($stmt);exit;
+
+    }
+    $stmt->close();
+    $conn->close();
+    $response = array('message' => 'Data received successfully');
+    echo json_encode($response);
+}
+?>
+
+
+
+
+
+
+
+
+
+
